@@ -37,11 +37,22 @@ type CardProps = React.ComponentProps<typeof Card>;
 
 export default function Dashboard({ ...props }: CardProps) {
   useEffect(() => {
-    setTimeout(() => {
-    const audio = new Audio(
-      "https://www.myinstants.com/media/sounds/tethys.mp3",
-    );
-    audio.play();}, 5000);
+    const interval = setInterval(() => {
+      fetch("/status").then((res) => {
+        if (res.ok) {
+          res.json().then((data) => {
+            if (data.alert) {
+              const audio = new Audio(
+                "https://www.myinstants.com/media/sounds/tethys.mp3",
+              );
+              audio.play();
+            }
+          });
+        }
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const { messages } = useLoaderData<typeof loader>();
