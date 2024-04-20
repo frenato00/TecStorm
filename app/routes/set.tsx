@@ -3,20 +3,21 @@ import { prisma } from "~/db.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const status = url.searchParams.get("status");
-  if (status === "true") {
-    await prisma.notification.upsert({
-      create: { id: "0", type: "notification", location: 0, description: "" },
-      update: {},
-      where: { id: "0" },
-    });
-    return json({});
-  } else if (status === "false") {
-    await prisma.notification.deleteMany({
-      where: { id: "0" },
-    });
-    return json({});
-  } else {
-    return json({ error: "Invalid status" }, { status: 400 });
-  }
+  const status =
+    url.searchParams.get("status") === null
+      ? undefined
+      : url.searchParams.get("status") === "true"
+        ? true
+        : false;
+
+  const temp = url.searchParams.get("temp") || undefined;
+  const hum = url.searchParams.get("hum") || undefined;
+  const flame = url.searchParams.get("flame") || undefined;
+  await prisma.sensor.upsert({
+    create: { id: "0", alert: status, temp, hum, flame },
+    update: { alert: status, temp, hum, flame },
+    where: { id: "0" },
+  });
+
+  return json({});
 };

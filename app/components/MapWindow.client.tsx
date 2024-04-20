@@ -23,7 +23,7 @@ export const MapWindow = () => {
       />
       <Marker position={[38.69365283385019, -9.22157927789338]}>
         <Popup autoClose={false} closeOnEscapeKey={false} closeOnClick={false}>
-          Abnormal infrared signal detected. <br /> High probability of fire.
+          Humidade: {}, Temp: {}, Probabilidade de Fogo: {}
         </Popup>
       </Marker>
     </MapContainer>
