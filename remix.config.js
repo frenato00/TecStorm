@@ -3,4 +3,9 @@ module.exports = {
   cacheDirectory: "./node_modules/.cache/remix",
   ignoredRouteFiles: ["**/.*", "**/*.test.{ts,tsx}"],
   serverModuleFormat: "cjs",
+  serverDependenciesToBundle: [
+    "react-leaflet",
+    "@react-leaflet/core",
+    /^remix-utils.*/,
+  ],
 };

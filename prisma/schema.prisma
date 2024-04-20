@@ -36,3 +36,19 @@ model Note {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
 }
+
+model Notification {
+  id String @id @default(cuid())
+  type String
+  location Float
+  description String
+}
+
+model Sensor{
+  id String @id @default(cuid())
+  lat Float
+  long Float
+  temp Float
+  humidity Int
+  infraRed Float
+}
