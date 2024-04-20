@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 
 function MyMap() {
@@ -6,7 +7,7 @@ function MyMap() {
   return null;
 }
 
-export const MapWindow = () => {
+export const MapWindow = ({status}) => {
   return (
     <MapContainer
       center={[38.69365283385019, -9.22157927789338]}
@@ -23,7 +24,7 @@ export const MapWindow = () => {
       />
       <Marker position={[38.69365283385019, -9.22157927789338]}>
         <Popup autoClose={false} closeOnEscapeKey={false} closeOnClick={false}>
-          Humidade: {}, Temp: {}, Probabilidade de Fogo: {}
+          Humidade: {status?.hum?status?.hum:"NaN"}, Temp: {status?.temp?status?.temp:"NaN"}, Probabilidade de Fogo: {status?.flame?status?.flame:"NaN"}
         </Popup>
       </Marker>
     </MapContainer>

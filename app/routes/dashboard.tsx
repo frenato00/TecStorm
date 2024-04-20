@@ -19,19 +19,18 @@ import MapView from "react-native-maps";
 import { HStack } from "@chakra-ui/react";
 import { MapWindow } from "~/components/MapWindow.client";
 import { useLoaderData } from "@remix-run/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ messages: [] });
 };
 
-const messages = [
+const default_messages = [
   {
     title: "Perigo de incêndio.",
-    description: "Detetado sinal alarmante de infravermelhos",
+    description: "Detetado sinal alarmante pelo dispositivo 0",
   },
 ];
-const notifications = [];
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -41,12 +40,14 @@ export default function Dashboard({ ...props }: CardProps) {
       fetch("/status").then((res) => {
         if (res.ok) {
           res.json().then((data) => {
+            setStatus(data);
             if (data.alert) {
+              setNot(true);
               const audio = new Audio(
                 "https://www.myinstants.com/media/sounds/tethys.mp3",
               );
               audio.play();
-            }
+            }else{setNot(false)}
           });
         }
       });
@@ -54,6 +55,9 @@ export default function Dashboard({ ...props }: CardProps) {
 
     return () => clearInterval(interval);
   }, []);
+
+  const [status, setStatus] = useState(null);
+  const [notifications, setNot] = useState(false);
 
   const { messages } = useLoaderData<typeof loader>();
   return (
@@ -69,11 +73,11 @@ export default function Dashboard({ ...props }: CardProps) {
         <CardHeader>
           <CardTitle>Notificações</CardTitle>
           <CardDescription>
-            {notifications.length > 0 ? (
-              messages.length == 1 ? (
-                <>{"Tem " + notifications.length + " notificação."}</>
+            {notifications? (
+              default_messages.length == 1 ? (
+                <>{"Tem " + default_messages.length + " notificação."}</>
               ) : (
-                <>{"Tem " + notifications.length + " notificações."}</>
+                <>{"Tem " + default_messages.length + " notificações."}</>
               )
             ) : (
               "Sem novas notificações."
@@ -82,12 +86,12 @@ export default function Dashboard({ ...props }: CardProps) {
         </CardHeader>
         <CardContent className="grid gap-4">
           <div>
-            {notifications.map((notification, index) => (
+          {notifications&&default_messages.map((notification, index) => (
               <div
                 key={index}
                 className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
               >
-                <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                <span className="flex h-2 w-2 translate-y-1 rounded-full bg-red-700" />
                 <div className="space-y-1">
                   <p className="text-sm font-medium leading-none">
                     {notification.title}
@@ -109,7 +113,7 @@ export default function Dashboard({ ...props }: CardProps) {
 
       <ClientOnly>
         {() => {
-          return <MapWindow />;
+          return <MapWindow status={status} />;
         }}
       </ClientOnly>
     </div>
