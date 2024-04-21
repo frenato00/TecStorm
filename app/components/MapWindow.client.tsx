@@ -24,12 +24,16 @@ export const MapWindow = ({ status }) => {
       />
       <Marker position={[38.69365283385019, -9.22157927789338]}>
         <Popup autoClose={false} closeOnEscapeKey={false} closeOnClick={false}>
+          {status?<div>
+
           <span className="font-bold">Humidade: </span>
-          {status?.hum ? status?.hum : "NaN"}%<br />
+          {status?.hum ? status?.hum : "0"}%<br />
           <span className="font-bold">Temp: </span>
-          {status?.temp ? status?.temp : "NaN"}º<br />
-          <span className="font-bold">Probabilidade de Fogo: </span>
-          {status?.flame ? status?.flame : "NaN"}%
+          {status?.temp ? status?.temp : "0"} ºC<br />
+          <span className="font-bold">Fogo detetado: </span>
+          {status?.flame ? status?.flame ==="1"?"Sim":"Não":"Não"}
+          </div>:<span>
+            A carregar...</span>}
         </Popup>
       </Marker>
     </MapContainer>
