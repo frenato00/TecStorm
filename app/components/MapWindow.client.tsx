@@ -14,7 +14,7 @@ export const MapWindow = ({status}) => {
       zoom={15}
       scrollWheelZoom={true}
       style={{ overflow: "hidden" }}
-      className="min-h-full min-h-full grow"
+      className=" grow"
       id="map"
     >
       <MyMap />

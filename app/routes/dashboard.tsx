@@ -63,11 +63,11 @@ export default function Dashboard({ ...props }: CardProps) {
   return (
     <div
       style={{ width: "100%", height: "100%", overflow: "hidden" }}
-      className="flex flex-row"
+      className="flex flex-col md:flex-row"
     >
       <Card
         style={{ float: "left" }}
-        className={cn("w-[380px] hidden md:block")}
+        className={cn("minW-[300px] block")}
         {...props}
       >
         <CardHeader>
@@ -84,16 +84,16 @@ export default function Dashboard({ ...props }: CardProps) {
             )}
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4">
+        <CardContent className={notifications?"grid  bg-slate-100 rounded":"grid " }>
           <div>
           {notifications&&default_messages.map((notification, index) => (
               <div
                 key={index}
-                className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+                className=" grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0"
               >
                 <span className="flex h-2 w-2 translate-y-1 rounded-full bg-red-700" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">
+                  <p className="text-sm font-medium leading-none font-bold">
                     {notification.title}
                   </p>
                   <p className="text-sm text-muted-foreground">
