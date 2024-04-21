@@ -7,7 +7,7 @@ function MyMap() {
   return null;
 }
 
-export const MapWindow = ({status}) => {
+export const MapWindow = ({ status }) => {
   return (
     <MapContainer
       center={[38.69365283385019, -9.22157927789338]}
@@ -24,7 +24,12 @@ export const MapWindow = ({status}) => {
       />
       <Marker position={[38.69365283385019, -9.22157927789338]}>
         <Popup autoClose={false} closeOnEscapeKey={false} closeOnClick={false}>
-          Humidade: {status?.hum?status?.hum:"NaN"}, Temp: {status?.temp?status?.temp:"NaN"}, Probabilidade de Fogo: {status?.flame?status?.flame:"NaN"}
+          <span className="font-bold">Humidade: </span>
+          {status?.hum ? status?.hum : "NaN"}%<br />
+          <span className="font-bold">Temp: </span>
+          {status?.temp ? status?.temp : "NaN"}º<br />
+          <span className="font-bold">Probabilidade de Fogo: </span>
+          {status?.flame ? status?.flame : "NaN"}%
         </Popup>
       </Marker>
     </MapContainer>
