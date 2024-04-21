@@ -10,7 +10,7 @@ function MyMap() {
 export const MapWindow = ({ status }) => {
   return (
     <MapContainer
-      center={[38.69365283385019, -9.22157927789338]}
+      center={[38.693196642457295, -9.220889360925968]}
       zoom={15}
       scrollWheelZoom={true}
       style={{ overflow: "hidden" }}
@@ -22,7 +22,7 @@ export const MapWindow = ({ status }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[38.69365283385019, -9.22157927789338]}>
+      <Marker position={[38.693196642457295, -9.220889360925968]}>
         <Popup autoClose={false} closeOnEscapeKey={false} closeOnClick={false}>
           {status?<div>
 
