@@ -6,7 +6,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const flame = url.searchParams.get("flame") || undefined;
   const status =
     url.searchParams.get("status") === null
-      ? flame
+      ? flame==="1"
         ? true
         : undefined
       : url.searchParams.get("status") === "true"
